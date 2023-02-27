@@ -1,27 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Button, View, Text, StyleSheet } from 'react-native';
 
 const DetailsScreen = ( {navigation, route} ) => {
     console.log(route);
     const movie = route.params.movie;
+    useEffect(() => {
+      const xhr = new XMLHttpRequest();
+    //takes in 2 parameters, the method type and the URL of the request. 
+      xhr.open('GET', "https://www.omdbapi.com/?apikey=92238e89&t=star+wars&y=1977");
+      xhr.send();
+
+      console.log(xhr.responseText);
+
+    }, []); //empty array indicates the function should only be called once after the screen is loaded
+    
+
     
     return (
       <View style={styles.mainView}>
-        <Text style={{fontSize: 20}}>{movie.title} ({movie.release})</Text>
-        <Text style={{fontSize: 100}} >{movie.screenNumber}</Text>
-        <Button
-          title="Go to Image"
-          onPress={() => {navigation.navigate("BigImageView")}}/>
-        <Button
-          title="More Details"
-          onPress={() => {
-            movie.screenNumber = movie.screenNumber + 1;
-            console.log(movie);
-            navigation.push("Details_to_Details",
-                            {movie: movie} )}}/>
-        <Button
-          title="Go Back to Home"
-          onPress={() => {navigation.popToTop()}}/>
+        
       </View>
     )
 };
